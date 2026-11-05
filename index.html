@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For Mobin ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap');
+*{box-sizing:border-box}
+body{
+ margin:0;background:#171019;color:#fff0f7;
+ font-family:Vazirmatn,Tahoma,sans-serif;
+ background-image:radial-gradient(#79345b55 1px,transparent 1px);
+ background-size:23px 23px
+}
+header{text-align:center;padding:25px 12px;color:#ff9bc9}
+header h1{font-size:34px;margin:5px}
+header p{color:#d6b9cb}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:10px}
+button{
+ font-family:inherit;cursor:pointer;border:1px solid #75405f;
+ border-radius:13px;padding:11px 16px;background:#352039;
+ color:white;font-weight:700
+}
+button:hover{background:#71395e}
+main{max-width:850px;margin:auto;padding:12px}
+.page{display:none}
+.page.active{display:block}
+.card{
+ background:linear-gradient(145deg,#302033,#211925);
+ border:1px solid #70415e;border-radius:23px;
+ padding:22px;margin:14px 0;box-shadow:0 12px 35px #0006
+}
+h2{color:#ff9bc9}
+.hero{text-align:center}
+.hero img{
+ width:100%;max-height:440px;object-fit:cover;
+ border-radius:19px;border:2px solid #a85c89
+}
+.pink{color:#ff9bc9}
+.dog{font-size:48px}
+.small{color:#cdb8ca;font-size:13px;line-height:2}
+.btn{background:linear-gradient(120deg,#ff91c5,#d66cc0);color:#281323;border:0}
+input{
+ width:100%;padding:12px;border-radius:12px;
+ background:#171019;border:1px solid #75405f;color:white;
+ font:inherit;margin:8px 0
+}
+audio{width:100%;margin:8px 0}
+.track{padding:12px;background:#241a29;border-radius:14px;margin:10px 0}
+.option{display:block;width:100%;text-align:right;margin:8px 0}
+.option.selected{background:#87436f;border-color:#ff9bc9}
+.result{background:#472843;padding:15px;border-radius:15px;margin-top:15px}
+.wheel{
+ width:230px;height:230px;max-width:70vw;max-height:70vw;
+ border-radius:50%;margin:25px auto;
+ background:conic-gradient(#ff91c5 0 45deg,#492c51 45deg 90deg,
+ #f3c1df 90deg 135deg,#633354 135deg 180deg,
+ #ff91c5 180deg 225deg,#492c51 225deg 270deg,
+ #f3c1df 270deg 315deg,#633354 315deg);
+ border:8px solid #ffe0f0;display:grid;place-items:center;
+ font-size:48px;transition:transform 3s cubic-bezier(.12,.72,.12,1)
+}
+.story{font-size:16px;line-height:2.2;white-space:pre-line}
+.choice{display:block;width:100%;text-align:right;margin:10px 0}
+.letter{background:#fff0f7;color:#44213b;padding:22px;border-radius:17px;line-height:2}
+footer{text-align:center;padding:30px;color:#c69ab8}
+</style>
+</head>
+<body>
+<header>
+ <div class="dog">🐶🌸</div>
+ <h1>For Mobin ♡</h1>
+ <p>یه دنیای کوچولو فقط برای تو</p>
+</header>
+
+<nav>
+ <button onclick="page('home')">خانه ♡</button>
+ <button onclick="page('wheel')">گردونه 🎡</button>
+ <button onclick="page('quiz')">آزمون 📝</button>
+ <button onclick="page('story')">داستان 🎮</button>
+ <button onclick="page('music')">موزیک 🎧</button>
+ <button onclick="page('letter')">نامه 💌</button>
+</nav>
+
+<main>
+<section id="home" class="page active">
+ <div class="card hero">
+  <h2>سلام شوهر قشنگم!</h2>
+  <img src="couple.jpg" alt="تصویر انیمه‌ای پوریـا و مبین">
+  <p>این سایت رو با کلی ذوق برای تو ساختم.</p>
+  <div class="dog">🐶💗🐶</div>
+  <button class="btn" onclick="page('wheel')">شروع سورپرایز!</button>
+ </div>
+ <div class="card hero">
+  <h2>از روز آشنایی‌مون</h2>
+  <div class="pink" style="font-size:34px;font-weight:900" id="days">♡</div>
+  <p class="small">روزهای قشنگ آشنایی‌مون</p>
+ </div>
+</section>
+
+<section id="wheel" class="page">
+ <div class="card hero">
+  <h2>گردونه‌ی شیطنت‌ها 🎡</h2>
+  <div class="wheel" id="wheel">🐶</div>
+  <button class="btn" onclick="spin()">بچرخون!</button>
+  <div class="result" id="wheelResult">ببینیم شانست چیه...</div>
+ </div>
+</section>
+
+<section id="quiz" class="page">
+ <div class="card">
+  <h2>چقدر پوریـا رو می‌شناسی؟</h2>
+  <div id="questions"></div>
+  <button class="btn" onclick="checkQuiz()">ثبت جواب‌ها</button>
+  <div class="result" id="quizResult">منتظر جواب‌هاتم!</div>
+ </div>
+</section>
+
+<section id="story" class="page">
+ <div class="card">
+  <h2 id="storyTitle">یک ماجراجویی دونفره</h2>
+  <p class="small">هر انتخاب، مسیر تازه‌ای می‌سازه.</p>
+  <div class="story" id="storyText"></div>
+  <div id="storyChoices"></div>
+  <button onclick="resetStory()">شروع دوباره ↺</button>
+ </div>
+</section>
+
+<section id="music" class="page">
+ <div class="card">
+  <h2>آهنگ‌های ما 🎧</h2>
+  <p class="small">آهنگ موردعلاقه‌ات رو انتخاب کن.</p>
+  <div class="track">🎵 آهنگ اول
+   <audio controls preload="none" src="song1.mp3"></audio>
+  </div>
+  <div class="track">🎵 آهنگ دوم
+   <audio controls preload="none" src="song2.mp3"></audio>
+  </div>
+  <div class="track">🎵 آهنگ سوم
+   <audio controls preload="none" src="song3.mp3"></audio>
+  </div>
+ </div>
+</section>
+
+<section id="letter" class="page">
+ <div class="card">
+  <h2>نامه‌ی مخفی 💌</h2>
+  <p>رمز نامه اسم کسیه که این سایت رو ساخته!</p>
+  <input id="password" placeholder="رمز رو بنویس...">
+  <button class="btn" onclick="openLetter()">باز کردن نامه</button>
+  <div id="letterText" style="display:none" class="letter">
+   مبین عزیزم،
+   <br>
+   شاید همیشه بلد نباشم احساساتم رو درست نشون بدم،
+   ولی تو برام مهمی و دوست دارم لحظه‌های قشنگ
+   و خاطره‌های بیشتری با هم بسازیم.
+   <br>
+   این سایت یه سورپرایز کوچولو از طرف پوریـاست.
+   <br>🐶💗
+  </div>
+ </div>
+</section>
+</main>
+<footer>Made with love ♡ 🐶</footer>
+
+<script>
+function page(id){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// تاریخ را با سال واقعی آشنایی‌تان تنظیم کن
+const START_DATE = "YYYY-09-08";
+if(!START_DATE.startsWith("YYYY")){
+ const days=Math.max(0,Math.floor((new Date()-new Date(START_DATE))/86400000));
+ document.getElementById('days').textContent=days+" روز ♡";
+}else{
+ document.getElementById('days').textContent="۸ سپتامبر ♡";
+}
+
+// گردونه
+const challenges=[
+ "یه عکس بفرست 📸",
+ "یه ویدیوی کوتاه بفرست 🎬",
+ "یه ویس بامزه بفرست 🎙️",
+ "انتخاب کن پوریـا برات چکار کنه 🎁",
+ "سه تا تعریف قشنگ بگو 💗",
+ "یه آهنگ برای پوریـا انتخاب کن 🎵",
+ "جریمه: با آهنگ میو میو ویدیو بساز 😂"
+];
+let rotation=0;
+function spin(){
+ const wheel=document.getElementById('wheel');
+ rotation+=1440+Math.random()*360;
+ wheel.style.transform=`rotate(${rotation}deg)`;
+ document.getElementById('wheelResult').textContent="دارم انتخاب می‌کنم...";
+ setTimeout(()=>{
+ document.getElementById('wheelResult').textContent=
+ "نتیجه: "+challenges[Math.floor(Math.random()*challenges.length)];
+ },3100);
+}
+
+// آزمون
+const qs=[
+ ["رنگ موردعلاقه‌م چیه؟",["آبی، مشکی، سفید","قرمز، زرد، سبز","صورتی، بنفش، نارنجی"],0],
+ ["انیمه‌ی موردعلاقه‌م کدومه؟",["دث نوت","شیطان‌کش","بلک کلاور","مرگ فوری"],0],
+ ["اگه یک روز کامل آزاد باشم چی ترجیح می‌دم؟",["برم بیرون","تمام روز بخوابم","خرید کنم"],1],
+ ["اگه ناراحت باشم ترجیح می‌دم چی‌کار کنم؟",["تنها باشم","بازی کنم","با یکی حرف بزنم"],2],
+ ["کدوم رو ترجیح می‌دم؟",["بازی دونفره","فیلم تنهایی","پیاده‌روی"],0],
+ ["فیلم موردعلاقه‌م چیه؟",["اینترستلار","تایتانیک","آواتار"],0],
+ ["دوست دارم وقتم رو چطور بگذرونم؟",["با رفیقام","با فامیلم","با مبین"],2]
+];
+function renderQuiz(){
+ const box=document.getElementById('questions');
+ qs.forEach((q,i)=>{
+  const div=document.createElement('div');
+  div.innerHTML=`<p><b>${i+1}. ${q[0]}</b></p>`;
+  q[1].forEach((a,j)=>{
+   const b=document.createElement('button');
+   b.className='option';b.textContent=String.fromCharCode(65+j)+'. '+a;
+   b.onclick=()=>{
+    div.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));
+    b.classList.add('selected');div.dataset.answer=j;
+   };
+   div.appendChild(b);
+  });
+  box.appendChild(div);
+ });
+}
+function checkQuiz(){
+ let score=0,done=0;
+ document.querySelectorAll('#questions>div').forEach((d,i)=>{
+  if(d.dataset.answer!==undefined){
+   done++;
+   if(Number(d.dataset.answer)===qs[i][2])score++;
+  }
+ });
+ const r=document.getElementById('quizResult');
+ if(done!==7){r.textContent="همه‌ی ۷ سؤال رو جواب بده!";return}
+ if(score>=5){
+  r.textContent=`آفرین به شوهر گلممم! ${score} از ۷ 🌸💐💗`;
+  flowers();
+ }else{
+  r.textContent=`خاک تو سرت شوهر عزیزم 😂 ${score} از ۷`;
+ }
+}
+function flowers(){
+ for(let i=0;i<25;i++){
+  let f=document.createElement('span');
+  f.textContent=['🌸','🌷','💗','✨'][i%4];
+  f.style.cssText=`position:fixed;top:-30px;left:${Math.random()*100}vw;font-size:26px;z-index:10;animation:fall 3s linear`;
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),3000);
+ }
+}
+
+// داستان انتخابی
+const story=[
+ {title:"مرحله اول: پیام مرموز",
+ text:"پوریـا و مبین تصمیم می‌گیرن یک بازی دونفره انجام بدن. درست وقتی بازی شروع می‌شه، صفحه تاریک می‌شه و یک پیام ظاهر می‌شه: «برای باز کردن مرحله بعد، یک سرنخ پیدا کنین!»",
+ choices:[["چراغ‌قوه رو روشن کنیم",1],["بازی رو دوباره اجرا کنیم",2]]},
+ {title:"مرحله دوم: اتاق تاریک",
+ text:"یک پاکت صورتی زیر میز پیدا می‌کنین. روی پاکت تصویر یک هاپوی کوچولو کشیده شده. داخلش نوشته: «چیزی رو پیدا کن که همیشه دنبالش می‌گردی!»",
+ choices:[["کنترل بازی رو پیدا کنیم",3],["با هم اتاق رو بگردیم",4]]},
+ {title:"مرحله دوم: مرحله مخفی",
+ text:"یک مسیر مخفی باز می‌شه. برای رد شدن از اون باید هر دو با هم یک معما رو حل کنین.",
+ choices:[["هرکدوم یک سرنخ رو بررسی کنیم",4],["یکی راهنمایی کنه، اون یکی امتحان کنه",3]]},
+ {title:"مرحله سوم: انتخاب مسیر",
+ text:"دو راه جلوتونه؛ یک مسیر کوتاه و یک مسیر پر از معما. کدوم رو انتخاب می‌کنین؟",
+ choices:[["مسیر کوتاه و بامزه",5],["مسیر پر از معما",6]]},
+ {title:"مرحله سوم: تیم دونفره",
+ text:"با همکاری هم قفل پاکت باز می‌شه. یک کارت داخلشه: «بهترین تیم، تیمیه که کنار هم تلاش می‌کنه.» حالا آماده‌ی مرحله آخرین!",
+ choices:[["مرحله‌ی آخر رو شروع کنیم",5],["یک معمای دیگه حل کنیم",6]]},
+ {title:"پایان اول: برنده‌های خوش‌شانس",
+ text:"بازی با صدای پیروزی تموم می‌شه! دو مدال روی صفحه ظاهر می‌شه و هاپوی کوچولو جایزه رو میاره: یک عالمه قلب و گل! 🐶🌸",
+ choices:[["از اول بازی کنیم",0]]},
+ {title:"پایان دوم: معمای حل‌شده",
+ text:"آخرین معما رو با همکاری حل می‌کنین. روی صفحه نوشته می‌شه: «راز برنده شدن، کنار هم بودن و همکاریه!» هاپوی نگهبان هم از خوشحالی می‌پره بالا. 🐶💗",
+ choices:[["از اول بازی کنیم",0]]}
+];
+let current=0;
+function drawStory(){
+ const s=story[current];
+ document.getElementById('storyTitle').textContent=s.title;
+ document.getElementById('storyText').textContent=s.text;
+ const c=document.getElementById('storyChoices');c.innerHTML='';
+ s.choices.forEach(([label,next])=>{
+  const b=document.createElement('button');
+  b.className='choice';b.textContent=label+" →";
+  b.onclick=()=>{current=next;drawStory()};
+  c.appendChild(b);
+ });
+}
+function resetStory(){current=0;drawStory()}
+
+// نامه
+function openLetter(){
+ const p=document.getElementById('password').value.trim();
+ if(p==="پوریا"||p.toLowerCase()==="pouria"){
+  document.getElementById('letterText').style.display='block';
+ }else alert("رمز درست نیست! دوباره امتحان کن 🐶");
+}
+renderQuiz();drawStory();
+</script>
+<style>
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.2}}
+</style>
+</body>
+</html>
